@@ -36,8 +36,8 @@ RUN wget https://download.support.xerox.com/pub/drivers/6000/drivers/linux/xerox
     rm -rf xerox-phaser-6000-6010_1.0-2_i386.deb data.tar.xz usr && \
     ldconfig /usr/lib /usr/lib32 2>/dev/null || true
 
-# Build and install brlaser from source (keep original)
-RUN apk add --no-cache git cmake && \
+# Build and install brlaser from source
+RUN apk add --no-cache --virtual=build-deps git cmake && \
     git clone https://github.com/pdewacht/brlaser.git && \
     cd brlaser && \
     cmake . && \
@@ -45,7 +45,7 @@ RUN apk add --no-cache git cmake && \
     make install && \
     cd .. && \
     rm -rf brlaser && \
-    apk del git cmake
+    apk del build-deps
 
 # Build and install gutenprint from source (keep original)
 RUN wget -O gutenprint-5.3.5.tar.xz https://sourceforge.net/projects/gimp-print/files/gutenprint-5.3/5.3.5/gutenprint-5.3.5.tar.xz/download && \
