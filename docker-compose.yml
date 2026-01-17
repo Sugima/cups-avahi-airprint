@@ -1,15 +1,17 @@
 version: '3.5'
-
 services:
   cups:
+    image: sugima/cups-avahi-airprint:latest
     container_name: cups
-    image: chuckcharlie/cups-avahi-airprint
-    #build: .
-    restart: always
-    network_mode: "host"
-    environment:
-      CUPSADMIN: cups
-      CUPSPASSWORD: cups
+    network_mode: host
+    privileged: true
+    devices:
+      - /dev/usb/lp0:/dev/usb/lp0
+      - /dev/bus/usb:/dev/bus/usb
     volumes:
-      - "./services:/services"
-      - "./config:/config"
+       - /volume1/docker/cups_print_server/services:/services
+       - /volume1/docker/cups_print_server/config:/config
+    environment:
+      CUPSADMIN: "cups"
+      CUPSPASSWORD: "cups"
+    restart: unless-stopped
