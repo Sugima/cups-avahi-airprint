@@ -1,7 +1,8 @@
-version: '3.5'
 services:
   cups:
-    image: sugima/cups-avahi-airprint:latest
+    build:
+      context: /home/mark/Works/NAS/docker/cups-avahi-airprint-master
+      dockerfile: Dockerfile
     container_name: cups
     network_mode: host
     privileged: true
